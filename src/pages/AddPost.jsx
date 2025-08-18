@@ -1,10 +1,13 @@
 import { Box, Typography, Paper, TextField, Button } from "@mui/material";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import PostContext from "../context/post/PostContext";
 
-function AddPost({ onCreatePost }) {
+function AddPost() {
   const [postTitle, setPostTitle] = useState("");
   const [postBody, setPostBody] = useState("");
+
+  const { createPost } = useContext(PostContext)
 
   const navigate = useNavigate();
 
@@ -18,7 +21,7 @@ function AddPost({ onCreatePost }) {
       title: postTitle,
       body: postBody,
     };
-    onCreatePost(post);
+    createPost(post);
     navigate("/dashboard");
   };
 

@@ -1,16 +1,22 @@
 import { Box, Typography, Paper, TextField, Button } from "@mui/material";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import AuthContext from "../context/auth/AuthContext";
 
-function Login({ onLogin }) {
+function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext)
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const loggedin = onLogin(username, password);
-    if (loggedin) navigate("/dashboard");
+    const loggedin = login(username, password);
+    if (loggedin) {
+      navigate("/dashboard")
+    } else {
+      alert("Login failed, invalid credentials.")
+    }
   };
 
   return (

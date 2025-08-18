@@ -1,8 +1,16 @@
 import { Typography, Box, Grid } from "@mui/material";
 import SinglePost from "../components/SinglePost";
 import Spinner from "../components/Spinner";
+import { useContext, useEffect } from "react";
+import PostContext from "../context/post/PostContext";
 
-function Dashboard({ posts, onDeletePost, onUpdatePost, loading }) {
+function Dashboard() {
+  const { posts, fetchPosts, loading } = useContext(PostContext);
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
   if (loading) return <Spinner />;
 
   return (
@@ -12,12 +20,7 @@ function Dashboard({ posts, onDeletePost, onUpdatePost, loading }) {
       </Typography>
       <Grid container spacing={2}>
         {posts.map((post) => (
-          <SinglePost
-            key={post.id}
-            post={post}
-            onDeletePost={onDeletePost}
-            onUpdatePost={onUpdatePost}
-          />
+          <SinglePost key={post.id} post={post} />
         ))}
       </Grid>
     </Box>

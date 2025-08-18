@@ -1,7 +1,11 @@
 import { Typography, Box, AppBar, Toolbar, Link } from "@mui/material";
+import { useContext } from "react";
 import { Link as RouterLink } from "react-router-dom";
+import AuthContext from "../context/auth/AuthContext";
 
-function Navbar({ isLoggedIn, onLogout }) {
+function Navbar() {
+  const { isLoggedIn, logout } = useContext(AuthContext);
+
   return (
     <AppBar position="static" sx={{ bgcolor: "#212529" }}>
       <Toolbar
@@ -59,7 +63,7 @@ function Navbar({ isLoggedIn, onLogout }) {
                   color: "#fff",
                   fontFamily: '"Roboto","Helvetica","Arial", "sans-serif"',
                 }}
-                onClick={() => onLogout()}
+                onClick={() => logout()}
               >
                 Logout
               </Link>

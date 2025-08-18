@@ -9,7 +9,8 @@ import {
   Box,
   TextField,
 } from "@mui/material";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import PostContext from "../context/post/PostContext";
 
 const style = {
   position: "absolute",
@@ -23,13 +24,15 @@ const style = {
   p: 4,
 };
 
-function SinglePost({ post, onDeletePost, onUpdatePost }) {
+function SinglePost({ post }) {
   const [open, setOpen] = useState(false);
   const [editedPost, setEditedPost] = useState({
     id: post.id,
     title: post.title,
     body: post.body,
   });
+
+  const { deletePost, updatePost } = useContext(PostContext);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -40,7 +43,7 @@ function SinglePost({ post, onDeletePost, onUpdatePost }) {
       alert("please fill the fields");
       return;
     }
-    onUpdatePost(editedPost);
+    updatePost(editedPost);
     handleClose();
   };
 
@@ -112,7 +115,7 @@ function SinglePost({ post, onDeletePost, onUpdatePost }) {
               sx={{ bgcolor: "#e03131" }}
               onClick={() => {
                 if (confirm("are you sure you want to delete this post")) {
-                  onDeletePost(post.id);
+                  deletePost(post.id);
                 }
               }}
             >
